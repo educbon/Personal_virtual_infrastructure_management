@@ -78,8 +78,8 @@ def create_multiple_vms_with_cloud_init(conn, vm_name,network_name, number_of_vm
 
     # Create virtual machine with each assigned IP
     for i, ip in enumerate(allocated_ips):
-        name = f"{vm_name}{i + 1}"  # Tạo tên máy ảo
-        ip_address = int_to_ip(ip)  # Chuyển đổi số nguyên IP thành chuỗi
+        name = f"{vm_name}{i + 1}"
+        ip_address = int_to_ip(ip)  # convert IP integer to string
         create_vm_with_cloud_init(conn, name,network_name, ip_address, netmask, gateway, base_image_path, ram, vcpus, portgroup)
 
     print(f"-----------------VMs {vm_name} have been created successfully!-----------------\n")
