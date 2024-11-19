@@ -5,6 +5,8 @@ from utils import input_default
 from network import list_network, create_network, delete_network, create_br, delete_br, trunk, list_bridge
 from create_xml import create_xml
 import cloud_init
+import uuid
+import shutil
 
 def init():
     global conn
@@ -119,6 +121,54 @@ def shutdown(name):
         print(f"[libvirtError] Error: {e}")
         return 1
 
+
+def clone(source_name, target_name):
+    if source_name == '¿':
+        source_name = input('Please enter the name of the source virtual machine:')
+    if target_name == '¿':
+        target_name = input('Please enter the name of the target virtual machine:')
+
+    try:
+        # Lookup the source domain
+        source_dom = conn.lookupByName(source_name)
+        if source_dom is None:
+            print(f"Source VM '{source_name}' not found.")
+            return 1
+
+        # Retrieve and modify the XML configuration
+        source_xml = source_dom.XMLDesc()
+        target_xml = source_xml.replace(source_name, target_name)
+        target_xml = target_xml.replace(
+            source_dom.UUIDString(), str(uuid.uuid4())
+        )
+
+        # Modify disk path in XML
+        source_disk_path = f'/var/lib/libvirt/images/{source_name}.qcow2'
+        target_disk_path = f'/var/lib/libvirt/images/{target_name}.qcow2'
+        target_xml = target_xml.replace(source_disk_path, target_disk_path)
+
+        # Copy the disk image
+        print(f"Cloning disk from {source_disk_path} to {target_disk_path}...")
+        shutil.copy(source_disk_path, target_disk_path)
+
+        # Handle cloud-init ISO if exists
+
+        # Define the new domain
+        target_dom = conn.defineXML(target_xml)
+        if target_dom is None:
+            print("Failed to define the target VM.")
+            return 1
+        else:
+            print(f"Virtual Machine '{target_name}' cloned successfully from '{source_name}'.")
+            return 0
+
+    except libvirt.libvirtError as e:
+        print(f"[libvirtError] Error: {e}")
+        return 1
+    except FileNotFoundError as e:
+        print(f"[FileNotFoundError] Error: {e}")
+        return 1
+
 def help_info():
     print("------ Main Menu ------")
     print("1. Manager VMs")
@@ -135,9 +185,10 @@ def help_manager_vms():
     print("5. Resume VM")
     print("6. Shutdown VM")
     print("7. Destroy VM")
-    print("8. Delete VM")
-    print("9. Back")
-    print("10. Quit Program\n")
+    print("8. clone VM")
+    print("9. Delete VM")
+    print("10. Back")
+    print("11. Quit Program\n")
 
 
 def help_create_vm():
@@ -260,11 +311,15 @@ def menu():
                     arg = input("Enter VM name to destroy: ")
                     destroy(arg)
                 elif vm_choice == "8":
+                    source_vm = input("Enter source VM name to clone: ")
+                    target_vm = input("Enter target VM name to clone: ")
+                    clone(source_vm, target_vm)
+                elif vm_choice == "9":
                     arg = input("Enter VM name to delete: ")
                     undefine(arg)
-                elif vm_choice == "9":
-                    break
                 elif vm_choice == "10":
+                    break
+                elif vm_choice == "11":
                     print("Exiting Program.")
                     return
                 else:

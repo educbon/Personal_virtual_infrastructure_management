@@ -2,7 +2,8 @@ import sys
 import libvirt
 import os
 import xml.dom.minidom as minidom
-from utils import run_command
+from utils import run_command, input_default
+
 
 def list_network():
     run_command(['sudo', 'virsh', 'net-list', '--all'])
@@ -94,7 +95,6 @@ def delete_network(network_name):
 
 
 def create_network(network_name):
-    run_command(['sudo', 'virsh', 'net-list', '--all'])
     if network_name == '¿':
         network_name = input('Enter the network name: ')
     conn = libvirt.open('qemu:///system')
@@ -126,7 +126,11 @@ def create_br(br_name):
         br_name = input('Enter the bridge name to be created: ')
     run_command(['sudo', 'ovs-vsctl', 'add-br', br_name])
     run_command(['sudo', 'ovs-vsctl', 'set', 'bridge', br_name, 'other-config:secure-mode=fail'])
-    # k error thi print ra success
+    br_ip = input_default("Enter the bridge IP (default: None): ", default_value="None")
+    if br_ip != "None":
+        run_command(['sudo', 'ip', 'addr', 'add', br_ip, 'dev', br_name])
+    run_command(['sudo', 'ip', 'link', 'set', 'dev', br_name, 'up'])
+
 
 def delete_br(br_name):
     if br_name == '¿':
