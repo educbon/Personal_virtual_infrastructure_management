@@ -104,7 +104,7 @@ def create_network(network_name):
 
     bridge_name = input('Enter the bridge name: ')
 
-    vlan_input = input('Enter VLAN IDs separated by commas (e.g., 100,200,00,all): ')
+    vlan_input = input('Enter VLAN IDs separated by commas (e.g., 100,200): ')
     vlan_config = vlan_input.split(',')
 
     default_portgroup = input('Enter default VLAN ID (or leave blank for no default): ').strip()

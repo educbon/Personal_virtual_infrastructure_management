@@ -253,7 +253,7 @@ def menu():
                                     ip_address = input("Enter IP address: ")
                                     netmask = input_default("Enter netmask (default = 255.255.255.0): ", "255.255.255.0")
                                     gateway = input("Enter gateway: ")
-                                    portgroup = input_default("Enter VLAN (default=none): ", "none")
+                                    portgroup = input_default("Enter VLAN (default=none; e.g., vlan-100,vlan-200): ", "none")
                                     base_image_path = input_default(
                                         "Enter path to base image (default: /var/lib/libvirt/images/focal-server-cloudimg-amd64.img): ",
                                         default_value="/var/lib/libvirt/images/focal-server-cloudimg-amd64.img")
@@ -270,7 +270,7 @@ def menu():
                                     netmask = input_default("Enter netmask (default = 255.255.255.0): ",
                                                             "255.255.255.0")
                                     gateway = input("Enter gateway: ")
-                                    portgroup = input_default("Enter VLAN (default=none): ", "none")
+                                    portgroup = input_default("Enter VLAN (default=none; e.g., vlan-100,vlan-200): ", "none")
                                     base_image_path = input_default(
                                         "Enter path to base image (default: /var/lib/libvirt/images/focal-server-cloudimg-amd64.img): ",
                                         default_value="/var/lib/libvirt/images/focal-server-cloudimg-amd64.img")
