@@ -115,7 +115,7 @@ def create_network(network_name):
     save_dir = '/home/bon/kvm_network'
 
     define_network(conn, network_name, bridge_name, vlan_config, save_dir, default_portgroup)
-    run_command(['sudo', 'virsh', 'net-start', network_name])
+    # run_command(['sudo', 'virsh', 'net-start', network_name])
     run_command(['sudo', 'virsh', 'net-autostart', network_name])
 
     conn.close()

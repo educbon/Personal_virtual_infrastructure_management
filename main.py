@@ -170,14 +170,14 @@ def clone(source_name, target_name):
         return 1
 
 def help_info():
-    print("------ Main Menu ------")
+    print("\n------ Main Menu ------")
     print("1. Manager VMs")
     print("2. Manager Networks")
-    print("3. Quit Program\n")
+    print("3. Quit Program")
 
 
 def help_manager_vms():
-    print("------ Manager VMs ------")
+    print("\n------ Manager VMs ------")
     print("1. List VMs and Status")
     print("2. Create VM")
     print("3. Start VM")
@@ -188,27 +188,27 @@ def help_manager_vms():
     print("8. clone VM")
     print("9. Delete VM")
     print("10. Back")
-    print("11. Quit Program\n")
+    print("11. Quit Program")
 
 
 def help_create_vm():
-    print("------ Create VM ------")
+    print("\n------ Create VM ------")
     print("1. Default")
     print("2. Custom (Cloud-Init)")
     print("3. Back")
-    print("4. Quit Program\n")
+    print("4. Quit Program")
 
 
 def help_custom_cloud_init():
-    print("------ Custom VM with Cloud-Init ------")
+    print("\n------ Custom VM with Cloud-Init ------")
     print("1. Create VM with Cloud-Init")
     print("2. Create Multiple VMs with Cloud-Init")
     print("3. Back")
-    print("4. Quit Program\n")
+    print("4. Quit Program")
 
 
 def help_manager_networks():
-    print("------ Manager Networks ------")
+    print("\n------ Manager Networks ------")
     print("1. List Network")
     print("2. List Bridge")
     print("3. Create Network")
@@ -217,7 +217,7 @@ def help_manager_networks():
     print("6. Delete Bridge")
     print("7. Connect Trunk Between Bridges")
     print("8. Back")
-    print("9. Quit Program\n")
+    print("9. Quit Program")
 
 
 def menu():
@@ -246,7 +246,7 @@ def menu():
                                 cloud_choice = input("> ")
 
                                 if cloud_choice == "1":  # Create VM with Cloud-Init
-                                    vm_name = input("Enter VM based name: ")
+                                    vm_name = input("Enter VM name: ")
                                     ram = input_default("Enter VM ram (default = 1024): ", 1024)
                                     vcpus = input_default("Enter VM vcpus (default = 1): ", 1)
                                     network_name = input("Enter network name: ")
