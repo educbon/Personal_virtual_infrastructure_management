@@ -87,11 +87,11 @@ def define_network(conn, network_name, bridge_name, vlan_config, save_dir, defau
         return
 
 def delete_network(network_name):
-    run_command(['sudo', 'virsh', 'net-list', '--all'])
     if network_name == '¿':
         network_name = input('Enter the network name: ')
     run_command(['sudo', 'virsh', 'net-destroy', network_name])
     run_command(['sudo', 'virsh', 'net-undefine', network_name])
+    run_command(['sudo', 'virsh', 'net-list', '--all'])
 
 
 def create_network(network_name):
@@ -138,7 +138,6 @@ def delete_br(br_name):
     run_command(['sudo', 'ovs-vsctl', 'del-br', br_name])
 
 def trunk(br1, br2):
-    run_command('sudo', 'ovs-vstl ', 'show')
     if br1 == '¿':
         br1 = input('Enter the bridge1: ')
     if br2 == '¿':
@@ -153,4 +152,8 @@ def trunk(br1, br2):
     run_command(['sudo', 'ovs-vsctl', 'set', 'Interface', br2_br1, 'type=internal'])
     run_command(['sudo', 'ovs-vsctl', 'set', 'interface', br1_br2, 'type=patch', f'options:peer={br2_br1}'])
     run_command(['sudo', 'ovs-vsctl', 'set', 'interface', br2_br1, 'type=patch', f'options:peer={br1_br2}'])
+
+    
+
+
 

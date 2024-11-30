@@ -6,6 +6,7 @@ def create_vm_with_cloud_init(conn, vm_name,network_name, ip_address, netmask, g
     cloud_init_dir = f'/home/bon/cloud-init/{vm_name}'
     os.makedirs(cloud_init_dir, exist_ok=True)
 
+
     user_data = f"""#cloud-config
 hostname: {vm_name} 
 users:
@@ -14,7 +15,7 @@ users:
     groups: sudo
     shell: /bin/bash
     lock_passwd: false
-    passwd: $6$.DUs3h3IuM4A3ey2$/UxWZlzDVB88KIqXDcLyd/5PQ1h6C3XWgXeLaF4EnT3lg/GQlIMt8QjsPIt9tY.AteE62a8HMlpC3YZ3IpzkM0
+    passwd: $6$.wW9rk4ZXgqpqQua$3WySKPBz/V/sUfHfocyg/N9u7dsBjSN8yTPJOY6B5rd8vOjx7HaDoGlMKjjkaffcB4uWoY7cqVMfcVvhyYP4Z1
     chpasswd: {{ expire: False }}
 
 package_update: true
